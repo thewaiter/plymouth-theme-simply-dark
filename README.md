@@ -1,4 +1,4 @@
-## Dark Arch
+## Simply Dark
 
 *Simply Dark* is a theme for Plymouth, the boot splash tool for Linux. It's designed with Bodhi Linux in mind, but can be used in any installation that uses Plymouth.
 
