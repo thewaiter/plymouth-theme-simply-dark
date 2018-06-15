@@ -2,7 +2,10 @@
 
 *Simply Dark* is a theme for Plymouth, the boot splash tool for Linux. It's designed with Bodhi Linux in mind, but can be used in any installation that uses Plymouth.
 
+Tenitiviely the [default plymouth theme for Bodhi Linux 5.0](https://github.com/BodhiDev/bodhi5packages/tree/master/bodhi-plymouth-theme "Bodhi Plymouth Theme").
+
 Copyright (C) 2015  Josep Sayol
+
           (C) 2018  Robert Wiley
 
 This program is free software: you can redistribute it and/or modify
