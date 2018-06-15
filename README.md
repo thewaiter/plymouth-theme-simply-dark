@@ -4,6 +4,8 @@
 
 Tentatively the [default plymouth theme for Bodhi Linux 5.0](https://github.com/BodhiDev/bodhi5packages/tree/master/bodhi-plymouth-theme "Bodhi Plymouth Theme").
 
+[![Screenshot](https://i.imgur.com/hWSnXYX.png)](https://i.imgur.com/yVbGx6U.png)
+
 Copyright (C) 2015  Josep Sayol
 
           (C) 2018  Robert Wiley
