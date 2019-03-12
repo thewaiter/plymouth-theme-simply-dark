@@ -48,29 +48,32 @@ anim.original_image = anim.image.Scale(anim.target_width, anim.target_width);
 anim.sprite = SpriteNew();
 anim.sprite.SetImage(RotatedImage (0));
 
-anim.sprite.SetX((Window.GetX() + Window.GetWidth() - RotatedImage(0).GetWidth()) / 2);
+anim.sprite.SetX((Window.GetMaxWidth() - RotatedImage(0).GetWidth()) / 2);
 //anim.sprite.SetY(Window.GetY() + Window.GetHeight() * 0.37);
 //anim.sprite.SetY(Window.GetY() + Window.GetHeight() * 0.75);
-anim.sprite.SetY((Window.GetY() + Window.GetHeight() - RotatedImage(0).GetHeight()) / 2);
+anim.sprite.SetY((Window.GetMaxHeight() - RotatedImage(0).GetHeight()) / 2);
 
 anim.angle = 0;
 anim.index = 0;
 
 logo.original_image = ImageNew("logo.png");
-ratio =  logo.original_image.GetWidth() / logo.original_image.GetHeight();
-reduction = 0.1;
-logo.image = logo.original_image.Scale(reduction * Window.GetMaxWidth() , reduction / ratio *  Window.GetMaxWidth());
+//ratio =  logo.original_image.GetWidth() / logo.original_image.GetHeight();
+//reduction = 0.1;
+//logo.image = logo.original_image.Scale(reduction * Window.GetMaxWidth() , reduction / ratio *  Window.GetMaxWidth());
+logo.image = logo.original_image;
 logo.sprite = Sprite(logo.image);
-logo.sprite.SetX(Window.GetWidth() / 2 - logo.image.GetWidth() / 2);
-logo.sprite.SetY(Window.GetHeight() / 2 - logo.image.GetHeight() / 2);
+logo.sprite.SetX(Window.GetMaxWidth() / 2 - logo.image.GetWidth() / 2);
+logo.sprite.SetY(Window.GetMaxHeight() / 2 - logo.image.GetHeight() / 2);
 logo.sprite.SetOpacity(1);
 logo.sprite.SetZ(10000);
 
 //*
-background.image = background.original_image.Scale(Window.GetMaxWidth() , Window.GetMaxHeight());
+//background.image = background.original_image.Scale(Window.GetMaxWidth() , Window.GetMaxHeight());
+background.image = background.original_image;
 background.sprite = SpriteNew();
 background.sprite.SetImage(background.image);
-background.sprite.SetPosition(Window.GetX(), Window.GetY(), -10);
+//background.sprite.SetPosition(Window.GetX(), Window.GetY(), -10);
+background.sprite.SetPosition(0, 0, -10);
 //*/
 
 sprite_prompt = SpriteNew();
