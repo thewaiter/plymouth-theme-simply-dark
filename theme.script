@@ -23,8 +23,8 @@ Window.GetMaxHeight = fun () {
 };
 
 anim.imagecount = 64;
-anim.target_width =	0.4 * 0.46 * Window.GetWidth();
-anim.target_height =	0.4 * 0.46 * Window.GetWidth();
+anim.target_width = 0.4 * 0.46 * Window.GetWidth();
+anim.target_height = 0.4 * 0.46 * Window.GetWidth();
 
 fun RotatedImage (index) {
 	index = Math.Int(index);
@@ -57,10 +57,10 @@ anim.angle = 0;
 anim.index = 0;
 
 logo.original_image = ImageNew("logo.png");
-//ratio =  logo.original_image.GetWidth() / logo.original_image.GetHeight();
-//reduction = 0.1;
-//logo.image = logo.original_image.Scale(reduction * Window.GetMaxWidth() , reduction / ratio *  Window.GetMaxWidth());
-logo.image = logo.original_image;
+ratio =  logo.original_image.GetWidth() / logo.original_image.GetHeight();
+reduction = 0.1;
+logo.image = logo.original_image.Scale(reduction * Window.GetWidth() , reduction / ratio *  Window.GetWidth());
+//logo.image = logo.original_image;
 logo.sprite = Sprite(logo.image);
 logo.sprite.SetX(Window.GetMaxWidth() / 2 - logo.image.GetWidth() / 2);
 logo.sprite.SetY(Window.GetMaxHeight() / 2 - logo.image.GetHeight() / 2);
