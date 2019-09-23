@@ -1,6 +1,7 @@
 // Dark Arch plymouth theme by Josep Sayol
 // Theme based on "Mint plymouth theme 2.0" by Enriki: http://gnome-look.org/content/show.php/Mint+plymouth+theme+2.0?content=161036
 // Background based on "Black background wood 3" by iAmFreeman: http://iamfreeman.deviantart.com/art/Black-Background-Set-161870450
+// Background ratio calculating based on lite dreams plymouth script https://www.gnome-look.org/p/1200272/ 
 
 Window.GetMaxWidth = fun () {
 	i = 0;
@@ -35,12 +36,11 @@ fun RotatedImage (index) {
 }
 
 
-background.original_image = ImageNew("background.png");
+//background.original_image = ImageNew("background.png");
 //Window.SetBackgroundTopColor(0.234, 0.43, 0.705);
 //Window.SetBackgroundBottomColor(0.16, 0.25, 0.44);
 Window.SetBackgroundTopColor(0, 0, 0);
 Window.SetBackgroundBottomColor(0.1, 0.1, 0.1);
-
 
 anim.image = ImageNew("spinner.png");
 anim.original_image = anim.image.Scale(anim.target_width, anim.target_width);
@@ -67,14 +67,26 @@ logo.sprite.SetY(Window.GetMaxHeight() / 2 - logo.image.GetHeight() / 2);
 logo.sprite.SetOpacity(1);
 logo.sprite.SetZ(10000);
 
-//*
-//background.image = background.original_image.Scale(Window.GetMaxWidth() , Window.GetMaxHeight());
-background.image = background.original_image;
-background.sprite = SpriteNew();
-background.sprite.SetImage(background.image);
-//background.sprite.SetPosition(Window.GetX(), Window.GetY(), -10);
-background.sprite.SetPosition(0, 0, -10);
-//*/
+bg_image = Image("background.png");
+
+# Compute screen/image ratio and scale the background accordingly
+
+window_max_width = Window.GetX() * 2 + Window.GetWidth();
+window_max_height = Window.GetY() * 2 + Window.GetHeight();
+screen_ratio = window_max_width / window_max_height;
+bg_image_ratio = bg_image.GetWidth() / bg_image.GetHeight();
+if (screen_ratio > bg_image_ratio)
+    bg_scale_factor = window_max_width / bg_image.GetWidth();
+else
+    bg_scale_factor = window_max_height / bg_image.GetHeight();
+scaled_bg_image = bg_image.Scale(bg_image.GetWidth() * bg_scale_factor,
+                                 bg_image.GetHeight() * bg_scale_factor);
+
+# Display background
+bg_sprite = Sprite(scaled_bg_image);
+bg_sprite.SetPosition(Window.GetX() + Window.GetWidth() / 2 - scaled_bg_image.GetWidth() / 2,
+                      Window.GetY() + Window.GetHeight() / 2 - scaled_bg_image.GetHeight() / 2,
+                      -10000);
 
 sprite_prompt = SpriteNew();
 
