@@ -56,14 +56,19 @@ anim.sprite.SetY((Window.GetMaxHeight() - RotatedImage(0).GetHeight()) / 2);
 anim.angle = 0;
 anim.index = 0;
 
-logo.original_image = ImageNew("logo.png");
+# Logo animation loop
+logo.original_image = ImageNew("progress-1.png");
 ratio =  logo.original_image.GetWidth() / logo.original_image.GetHeight();
 reduction = 0.1;
-logo.image = logo.original_image.Scale(reduction * Window.GetWidth() , reduction / ratio *  Window.GetWidth());
-//logo.image = logo.original_image;
-logo.sprite = Sprite(logo.image);
-logo.sprite.SetX(Window.GetMaxWidth() / 2 - logo.image.GetWidth() / 2);
-logo.sprite.SetY(Window.GetMaxHeight() / 2 - logo.image.GetHeight() / 2);
+
+for (i = 1; i < 37; i++) {
+  logo.image[i] = Image("progress-" + i + ".png").Scale(reduction * Window.GetWidth() , reduction / ratio *  Window.GetWidth());
+}  
+
+logo.sprite = Sprite();
+logo.sprite.SetX(Window.GetMaxWidth() / 2 - logo.image[1].GetWidth() / 2);
+logo.sprite.SetY(Window.GetMaxHeight() / 2 - logo.image[1].GetHeight() / 2);
+
 logo.sprite.SetOpacity(1);
 logo.sprite.SetZ(10000);
 
@@ -95,7 +100,8 @@ fun refresh_callback () {
 		anim.index += 1;
 		anim.index %= anim.imagecount;
 		anim.sprite.SetImage(RotatedImage(anim.index));
-	 //anim.sprite.SetOpacity (1);
+		logo.sprite.SetImage(logo.image[Math.Int(anim.index / 3) % 37]);
+		//anim.sprite.SetOpacity (1);
 		motif.sprite.SetOpacity(motif.opacity);
 	}
 	else {
