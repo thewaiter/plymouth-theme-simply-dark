@@ -1,114 +1,27 @@
-// Dark Arch plymouth theme by Josep Sayol
-// Theme based on "Mint plymouth theme 2.0" by Enriki: http://gnome-look.org/content/show.php/Mint+plymouth+theme+2.0?content=161036
-// Background based on "Black background wood 3" by iAmFreeman: http://iamfreeman.deviantart.com/art/Black-Background-Set-161870450
-// Background ratio calculating based on lite dreams plymouth script https://www.gnome-look.org/p/1200272/ 
+ # Nice colour on top of the screen fading to
+//Window.SetBackgroundTopColor (0.0, 0.00, 0.0);
+Window.SetBackgroundTopColor(0.18, 0.21, 0.24);
 
-Window.GetMaxWidth = fun () {
-	i = 0;
-	width = 0;
-	while (Window.GetWidth(i)) {
-		width = Math.Max(width, Window.GetWidth(i));
-		i++;
-	}
-	return width;
-};
+# an equally nice colour on the bottom
+//Window.SetBackgroundBottomColor (0.0, 0.00, 0.0);
+Window.SetBackgroundBottomColor(0.18, 0.21, 0.24);
 
-Window.GetMaxHeight = fun () {
-	i = 0;
-	height = 0;
-	while (Window.GetHeight(i)) {
-		height = Math.Max(height, Window.GetHeight(i));
-		i++;
-	}
-	return height;
-};
-
-anim.imagecount = 64;
-anim.target_width = 0.4 * 0.46 * Window.GetWidth();
-anim.target_height = 0.4 * 0.46 * Window.GetWidth();
-
-fun RotatedImage (index) {
-	index = Math.Int(index);
-	if (!RotatedImageCache[index]) {
-		RotatedImageCache[index] = anim.original_image.Rotate((Math.Pi*2*index)/anim.imagecount).Scale(anim.target_width, anim.target_height);
-	}
-	return RotatedImageCache[index];
-}
+# Image animation loop
+for (i = 1; i < 78; i++)
+  anim_image[i] = Image("progress-" + i + ".png");
+anim_sprite = Sprite();
 
 
-//background.original_image = ImageNew("background.png");
-//Window.SetBackgroundTopColor(0.234, 0.43, 0.705);
-//Window.SetBackgroundBottomColor(0.16, 0.25, 0.44);
-Window.SetBackgroundTopColor(0, 0, 0);
-Window.SetBackgroundBottomColor(0.1, 0.1, 0.1);
+anim_sprite.SetX(Window.GetWidth() / 2 - anim_image[1].GetWidth() / 2); # Place in the centre
+anim_sprite.SetY(Window.GetHeight() / 2 - anim_image[1].GetHeight() / 2);
 
-anim.image = ImageNew("spinner.png");
-anim.original_image = anim.image.Scale(anim.target_width, anim.target_width);
+progress = 1;
 
-anim.sprite = SpriteNew();
-anim.sprite.SetImage(RotatedImage (0));
-
-anim.sprite.SetX((Window.GetMaxWidth() - RotatedImage(0).GetWidth()) / 2);
-//anim.sprite.SetY(Window.GetY() + Window.GetHeight() * 0.37);
-//anim.sprite.SetY(Window.GetY() + Window.GetHeight() * 0.75);
-anim.sprite.SetY((Window.GetMaxHeight() - RotatedImage(0).GetHeight()) / 2);
-
-anim.angle = 0;
-anim.index = 0;
-
-# Logo animation loop
-logo.original_image = ImageNew("progress-1.png");
-ratio =  logo.original_image.GetWidth() / logo.original_image.GetHeight();
-reduction = 0.1;
-
-for (i = 1; i < 37; i++) {
-  logo.image[i] = Image("progress-" + i + ".png").Scale(reduction * Window.GetWidth() , reduction / ratio *  Window.GetWidth());
-}  
-
-logo.sprite = Sprite();
-logo.sprite.SetX(Window.GetMaxWidth() / 2 - logo.image[1].GetWidth() / 2);
-logo.sprite.SetY(Window.GetMaxHeight() / 2 - logo.image[1].GetHeight() / 2);
-
-logo.sprite.SetOpacity(1);
-logo.sprite.SetZ(10000);
-
-bg_image = Image("background.png");
-
-# Compute screen/image ratio and scale the background accordingly
-
-window_max_width = Window.GetX() * 2 + Window.GetWidth();
-window_max_height = Window.GetY() * 2 + Window.GetHeight();
-screen_ratio = window_max_width / window_max_height;
-bg_image_ratio = bg_image.GetWidth() / bg_image.GetHeight();
-if (screen_ratio > bg_image_ratio)
-    bg_scale_factor = window_max_width / bg_image.GetWidth();
-else
-    bg_scale_factor = window_max_height / bg_image.GetHeight();
-scaled_bg_image = bg_image.Scale(bg_image.GetWidth() * bg_scale_factor,
-                                 bg_image.GetHeight() * bg_scale_factor);
-
-# Display background
-bg_sprite = Sprite(scaled_bg_image);
-bg_sprite.SetPosition(Window.GetX() + Window.GetWidth() / 2 - scaled_bg_image.GetWidth() / 2,
-                      Window.GetY() + Window.GetHeight() / 2 - scaled_bg_image.GetHeight() / 2,
-                      -10000);
-
-sprite_prompt = SpriteNew();
-
-fun refresh_callback () {
-	if (status == "normal") {
-		anim.index += 1;
-		anim.index %= anim.imagecount;
-		anim.sprite.SetImage(RotatedImage(anim.index));
-		logo.sprite.SetImage(logo.image[Math.Int(anim.index / 3) % 37]);
-		//anim.sprite.SetOpacity (1);
-		motif.sprite.SetOpacity(motif.opacity);
-	}
-	else {
-		anim.sprite.SetOpacity(0);
-		motif.sprite.SetOpacity(0);
-	}
-}
+fun refresh_callback ()
+  {
+    anim_sprite.SetImage(anim_image[Math.Int(progress / 3) % 78]);
+    progress++;
+  }
 
 Plymouth.SetRefreshFunction (refresh_callback);
 
